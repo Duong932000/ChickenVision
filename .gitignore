@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+
+# Virtual env / tooling caches
+.venv/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.nox/
+
+# Data & model artifacts (never commit farm footage/weights by accident)
+data/
+runs/
+*.pt
+*.onnx
+
+# Editor/OS
+.vscode/
+.idea/
+.DS_Store

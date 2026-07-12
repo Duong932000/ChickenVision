@@ -1,0 +1,18 @@
+# Config mẫu — luôn duy trì file này song song với schema (mục 5, CLAUDE.md).
+# Mọi giá trị gắn với 1 trại/chuồng/camera cụ thể nằm ở ĐÂY, không hard-code trong code.
+farm_id: an_giang_01
+
+paths:
+  data_root: data/
+  frames_root: data/frames/
+  dataset_root: data/datasets/
+
+houses:
+  - house_id: house_01
+    cameras:
+      - camera_id: cam_01
+        source:
+          type: file
+          path: data/raw_videos/house_01_cam_01_sample.mp4
+        # RTSP đã có chỗ trong schema (type: rtsp, field "url") nhưng CHƯA implement —
+        # xem chickenvision.ingest.rtsp_source. Khoá cho Milestone 1B.

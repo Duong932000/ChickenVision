@@ -1,0 +1,72 @@
+[project]
+name = "chickenvision"
+version = "0.1.0"
+description = "Computer vision monitoring for broiler chicken houses"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+dependencies = [
+    "opencv-python-headless>=4.9",
+    "pydantic>=2.6",
+    "pyyaml>=6.0",
+    "typer>=0.12",
+]
+
+[project.scripts]
+chickenvision = "chickenvision.cli.app:app"
+
+[dependency-groups]
+dev = [
+    "ruff>=0.6",
+    "mypy>=1.11",
+    "pytest>=8.0",
+    "pre-commit>=3.7",
+    "nox>=2024.4.15",
+    "types-pyyaml>=6.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/chickenvision"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests", "noxfile.py"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.ruff.lint.flake8-bugbear]
+# typer's `= typer.Option(...)` / `typer.Argument(...)` default-value idiom is
+# intentional, not the mutable-default footgun B008 normally guards against.
+extend-immutable-calls = ["typer.Option", "typer.Argument"]
+
+[tool.mypy]
+python_version = "3.11"
+files = ["src/chickenvision"]
+warn_unused_configs = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+
+[[tool.mypy.overrides]]
+module = "chickenvision.config.*"
+strict = true
+
+[[tool.mypy.overrides]]
+module = "chickenvision.ingest.*"
+strict = true
+
+[[tool.mypy.overrides]]
+module = "chickenvision.dataset.*"
+strict = true
+
+[[tool.mypy.overrides]]
+module = "cv2.*"
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
